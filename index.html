@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Keagan Ferrao">
+    <title>Sorting Algorithm Visualizer</title>
+    <link rel="icon" type="image/x-icon" href="images/graph.svg">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/sort.js" defer></script>
+    <script src="js/script.js" defer></script>
+</head>
+
+<body>
+    <h1 class="flex-center">
+        <img src="images/graph.svg" alt="graph-image" height="50px" width="100px"> Sorting Algorithm Visualizer
+    </h1>
+    <div id="data-control">
+        <div id="sort">
+            <select id="select-algo">
+                <option value="selectionSort">Selection Sort</option>
+                <option value="bubbleSort">Bubble Sort</option>
+                <option value="insertionSort">Insertion Sort</option>
+                <option disabled value="mergeSort">Merge Sort</option>
+                <option value="quickSort">Quick Sort</option>
+            </select>
+            <select id="data-type">
+                <option value="random-array">Random Array</option>
+                <option value="custom-array">Custom Array</option>
+            </select>
+            <div id="random-array-fields">
+                <label for="">Min: </label><input min="0" id="minValue" type="number">
+                <label for="">Max: </label><input min="0" id="maxValue" type="number">
+                <label for="">Count: </label><input min="5" id="count" type="number">
+            </div>
+            <div id="custom-array-fields">
+                <label for="">Values: </label><input id="custom-value" value="10,19,7,6,4" type="text">
+            </div>
+            <!-- <input type="text" name="elements" id="elements"> -->
+            <input type="button" id="generate" value="Generate">
+        </div>
+        <div class="compare">
+            <input type="button" value="Compare">
+        </div>
+    </div>
+    <!-- <div id="array"></div><br> -->
+    <div id="drawArray">
+        <input type="button" value="sort" id="visualize"><br>
+    </div>
+    <div id="flow-control">
+        <div id="speed-control">
+            <label for="speed">Speed: </label><input id="speed" type="range" min="1" max="100" value="50">
+        </div>
+        <div id="playback-control"></div>
+    </div>
+</body>
+
+</html>
