@@ -5,14 +5,24 @@ let speed = 0.5;
 const Template = function () {
     const slider = document.getElementById("speed");
     const output = document.getElementById("speedValue");
+    let type = 'random';
 
-    const showData = (e) => {
-        e.preventDefault();
-        document.getElementById('array').textContent = 'Array: [ ' + document.getElementById('elements').value + ' ]';
-
+    const showData = () => {
         try {
-            array = document.getElementById('elements').value.split(',');
-            array = array.map(Number);
+            if (type === 'custom') {
+                array = document.getElementById('custom-value').value.split(',');
+                array = array.map(Number);
+            } else if (type === 'random') {
+                array = [];
+                let min = document.getElementById('minValue').value;
+                let max = document.getElementById('maxValue').value;
+                let count = document.getElementById('count').value;
+
+                for (let i = 0; i < count; i++) {
+                    array.push(Math.floor(Math.random() * (max - min + 1) + min));
+                }
+            }
+
             let html = '';
             let maxValue = Math.max(...array);
             array.forEach((ele) => {
@@ -49,14 +59,15 @@ const Template = function () {
         startAnimation();
     }
 
-    const adjustSpeed = () => {
-        output.innerHTML = slider.value;
+    const adjustSpeed = function () {
+        console.log(this.value);
         speed = (1 / this.value);
+        console.log(speed);
     }
 
     const swapNodes = async (nodeA, nodeB) => {
-        nodeA.style.backgroundColor = 'red';
-        nodeB.style.backgroundColor = 'red';
+        nodeA.style.backgroundColor = '#ffadad';
+        nodeB.style.backgroundColor = '#ffadad';
         const parentA = nodeA.parentNode;
         const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
 
@@ -73,8 +84,8 @@ const Template = function () {
             }, 300)
         });
 
-        nodeA.style.backgroundColor = 'aqua';
-        nodeB.style.backgroundColor = 'aqua';
+        nodeA.style.backgroundColor = '#ac518bbf';
+        nodeB.style.backgroundColor = '#ac518bbf';
     }
 
     const startAnimation = () => {
@@ -87,12 +98,31 @@ const Template = function () {
         })
     }
 
+    const setInputArrayType = function () {
+        switch (this.value) {
+            case 'custom-array':
+                document.getElementById('custom-array-fields').style.display = 'block';
+                document.getElementById('random-array-fields').style.display = 'none';
+                type = 'custom';
+                break;
+            case 'random-array':
+                document.getElementById('custom-array-fields').style.display = 'none';
+                document.getElementById('random-array-fields').style.display = 'block';
+                type = 'random';
+                break;
+            default:
+                break;
+        }
+
+    }
+
     return {
         init: () => {
-            output.innerHTML = slider.value;
+            showData();
             document.getElementById('generate').addEventListener('click', showData);
             document.getElementById('visualize').addEventListener('click', visualizeAlgo);
             slider.addEventListener('input', adjustSpeed);
+            document.getElementById('data-type').addEventListener('change', setInputArrayType);
         }
     }
 }();
