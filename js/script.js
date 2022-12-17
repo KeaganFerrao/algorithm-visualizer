@@ -1,13 +1,18 @@
 let array = [];
 let swaps = [];
-let speed = 0.5;
 
 const Template = function () {
     const slider = document.getElementById("speed");
-    const output = document.getElementById("speedValue");
     let type = 'random';
+    let speed = 250;
+    let stopFlag = false;
+    let pauseFlag = false;
+    let pauseIdx = 0;
+    let inProgress = false;
 
     const showData = () => {
+        stopAnimation(true);
+        document.getElementById('visualize').disabled = false;
         try {
             if (type === 'custom') {
                 array = document.getElementById('custom-value').value.split(',');
@@ -19,7 +24,7 @@ const Template = function () {
                 let count = document.getElementById('count').value;
 
                 for (let i = 0; i < count; i++) {
-                    array.push(Math.floor(Math.random() * (max - min + 1) + min));
+                    array.push(Math.ceil(Math.random() * (max - min + 1) + min));
                 }
             }
 
@@ -36,6 +41,8 @@ const Template = function () {
     }
 
     const visualizeAlgo = () => {
+        stopAnimation(false);
+        document.getElementById('visualize').disabled = true;
         let selectedAlgo = document.getElementById('select-algo').value;
         swaps = [];
         switch (selectedAlgo) {
@@ -59,10 +66,23 @@ const Template = function () {
         startAnimation();
     }
 
+    const play = () => {
+        if (!inProgress || !pauseFlag) {
+            return;
+        }
+        pauseFlag = false;
+        startAnimation(pauseIdx);
+    }
+
+    const pause = () => {
+        if (!inProgress) {
+            return;
+        }
+        pauseFlag = true;
+    }
+
     const adjustSpeed = function () {
-        console.log(this.value);
-        speed = (1 / this.value);
-        console.log(speed);
+        speed = 550 - (this.value)*5;
     }
 
     const swapNodes = async (nodeA, nodeB) => {
@@ -77,25 +97,38 @@ const Template = function () {
         // Move `nodeB` to before the sibling of `nodeA`
         parentA.insertBefore(nodeB, siblingA);
 
-        //sleep for 300ms
         await new Promise(function (resolve) {
             setTimeout(function () {
                 resolve();
-            }, 300)
+            }, speed);
         });
 
         nodeA.style.backgroundColor = '#ac518bbf';
         nodeB.style.backgroundColor = '#ac518bbf';
     }
 
-    const startAnimation = () => {
-        let count = 1;
+    const startAnimation = async (idx = 0) => {
+        inProgress = true;
         let domArray = document.getElementsByClassName('pillar');
-        swaps.forEach(function (ele) {
-            setTimeout(function () {
-                swapNodes(domArray[ele[0]], domArray[ele[1]])
-            }, count++ * 500 * speed)
-        })
+        for (let i = idx; i < swaps.length; i++) {
+            if (stopFlag) {
+                document.getElementById('visualize').disabled = false;
+                return;
+            }
+            if (pauseFlag) {
+                pauseIdx = i;
+                return;
+            }
+            await swapNodes(domArray[swaps[i][0]], domArray[swaps[i][1]]);
+        }
+        document.getElementById('visualize').disabled = false;
+        swaps = [];
+        pauseIdx = 0;
+        inProgress = false;
+    }
+
+    const stopAnimation = (value) => {
+        stopFlag = value;
     }
 
     const setInputArrayType = function () {
@@ -123,6 +156,8 @@ const Template = function () {
             document.getElementById('visualize').addEventListener('click', visualizeAlgo);
             slider.addEventListener('input', adjustSpeed);
             document.getElementById('data-type').addEventListener('change', setInputArrayType);
+            document.getElementById('play').addEventListener('click', play);
+            document.getElementById('pause').addEventListener('click', pause);
         }
     }
 }();

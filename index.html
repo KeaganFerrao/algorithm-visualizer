@@ -24,7 +24,7 @@
                 <option value="selectionSort">Selection Sort</option>
                 <option value="bubbleSort">Bubble Sort</option>
                 <option value="insertionSort">Insertion Sort</option>
-                <option disabled value="mergeSort">Merge Sort</option>
+                <option style="display: none;" value="mergeSort">Merge Sort</option>
                 <option value="quickSort">Quick Sort</option>
             </select>
             <select id="data-type">
@@ -41,7 +41,7 @@
             </div>
             <input type="button" id="generate" value="Generate">
         </div>
-        <div class="compare">
+        <div class="compare" style="display: none;">
             <input type="button" value="Compare">
         </div>
     </div>
@@ -50,9 +50,12 @@
     <div id="flow-control">
         <input type="button" value="Sort" id="visualize">
         <div id="speed-control">
-            <label for="speed">Speed: </label><input id="speed" type="range" min="1" max="100" value="50">
+            <label for="speed">Speed: </label><input id="speed" type="range" min="0" max="100" step="20" value="60">
         </div>
-        <div id="playback-control"></div>
+        <div id="playback-control">
+            <input type="button" value="Play" id="play">
+            <input type="button" value="Pause" id="pause">
+        </div>
     </div>
 </body>
 

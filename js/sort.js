@@ -17,7 +17,7 @@ const Sort = function () {
         let swapped;
         for (let i = 0; i < arr.length; i++) {
             swapped = false
-            for (let j = 0; j < array.length - i; j++) {
+            for (let j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
                     //Swap Elements
                     [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
