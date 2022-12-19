@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Keagan Ferrao">
+    <meta name="theme-color" content="#000">
     <title>Sorting Algorithm Visualizer</title>
     <link rel="icon" type="image/x-icon" href="images/graph.svg">
     <link rel="stylesheet" href="css/fonts.css">
@@ -34,7 +35,7 @@
             <div id="random-array-fields">
                 <label for="">Min: </label><input value="5" min="0" id="minValue" type="number">
                 <label for="">Max: </label><input value="30" min="0" id="maxValue" type="number">
-                <label for="">Count: </label><input value="30" min="5" max="100" id="count" type="number">
+                <label for="">Count: </label><input value="40" min="5" max="100" id="count" type="number">
             </div>
             <div id="custom-array-fields">
                 <label for="">Values: </label><input id="custom-value" value="10,19,7,6,4,5,7,3,14,4,2" type="text">
@@ -47,14 +48,15 @@
     </div>
     <div id="drawArray">
     </div>
-    <div id="flow-control">
+    <div id="flow-control" style="flex-wrap: wrap;">
         <input type="button" value="Sort" id="visualize">
         <div id="speed-control">
             <label for="speed">Speed: </label><input id="speed" type="range" min="0" max="100" step="20" value="60">
         </div>
-        <div id="playback-control">
+        <div id="playback-control" class="flex-center" style="gap:0.5rem">
             <input type="button" value="Play" id="play">
             <input type="button" value="Pause" id="pause">
+            <input id="playback" type="range" min="0" max="100" value="0" step="any">
         </div>
     </div>
 </body>

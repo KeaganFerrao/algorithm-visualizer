@@ -13,6 +13,7 @@ const Template = function () {
     const showData = () => {
         stopAnimation(true);
         document.getElementById('visualize').disabled = false;
+        document.getElementById('playback').value = 0;
         try {
             if (type === 'custom') {
                 array = document.getElementById('custom-value').value.split(',');
@@ -82,7 +83,7 @@ const Template = function () {
     }
 
     const adjustSpeed = function () {
-        speed = 550 - (this.value)*5;
+        speed = 550 - (this.value) * 5;
     }
 
     const swapNodes = async (nodeA, nodeB) => {
@@ -105,6 +106,9 @@ const Template = function () {
 
         nodeA.style.backgroundColor = '#ac518bbf';
         nodeB.style.backgroundColor = '#ac518bbf';
+        
+        //Update playback slider value 
+        document.getElementById('playback').value = (parseFloat(document.getElementById('playback').value) + parseFloat((100 / swaps.length).toFixed(2)));
     }
 
     const startAnimation = async (idx = 0) => {
@@ -117,6 +121,8 @@ const Template = function () {
             }
             if (pauseFlag) {
                 pauseIdx = i;
+                domArray[swaps[pauseIdx][0]].style.backgroundColor = '#ffadad';
+                domArray[swaps[pauseIdx][1]].style.backgroundColor = '#ffadad';
                 return;
             }
             await swapNodes(domArray[swaps[i][0]], domArray[swaps[i][1]]);
