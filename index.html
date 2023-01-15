@@ -21,7 +21,7 @@
     </h1>
     <div id="data-control">
         <div id="sort">
-            <select id="select-algo">
+            <select class="select-algo">
                 <option value="selectionSort">Selection Sort</option>
                 <option value="bubbleSort">Bubble Sort</option>
                 <option value="insertionSort">Insertion Sort</option>
@@ -42,11 +42,13 @@
             </div>
             <input type="button" id="generate" value="Generate">
         </div>
-        <div class="compare" style="display: none;">
-            <input type="button" value="Compare">
+        <div class="compare">
+            <input id="compare" type="button" value="Compare">
         </div>
     </div>
-    <div id="drawArray">
+    <div id="compare-container">
+        <div class="drawArray">
+        </div>
     </div>
     <div id="flow-control" style="flex-wrap: wrap;">
         <input type="button" value="Sort" id="visualize">
@@ -56,7 +58,7 @@
         <div id="playback-control" class="flex-center" style="gap:0.5rem">
             <input type="button" value="Play" id="play">
             <input type="button" value="Pause" id="pause">
-            <input id="playback" type="range" min="0" max="100" value="0" step="any">
+            <input style="display: none;" id="playback" disabled type="range" min="0" max="100" value="0" step="any">
         </div>
     </div>
 </body>

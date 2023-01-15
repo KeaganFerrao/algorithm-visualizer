@@ -23,12 +23,13 @@ h1 {
     padding: 0.7rem;
 }
 
-#drawArray {
+.drawArray {
     background-color: #ECECEC;
     height: 400px;
     display: flex;
     align-items: end;
     padding: 10px;
+    position:relative
 }
 
 .pillar {
@@ -51,6 +52,7 @@ h1 {
 #data-control {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 #custom-array-fields {
@@ -91,6 +93,10 @@ input[type=range] {
   }
   input[type=range]:focus::-webkit-slider-runnable-track {
     background: #758283;
+  }
+  #compare-container {
+    display: flex;
+    flex-direction: column;
   }
   /* input[type=range]::-moz-range-track {
     width: 100%;

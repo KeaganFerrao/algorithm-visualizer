@@ -1,5 +1,6 @@
 const Sort = function () {
-    function selectionSort(arr) {
+    function selectionSort(arr, idx) {
+        const temp = [];
         for (let i = 0; i < arr.length; i++) {
             let minIdx = i;
             for (let j = i; j < arr.length; j++) {
@@ -9,19 +10,21 @@ const Sort = function () {
             }
             //Swap Elements
             [arr[minIdx], arr[i]] = [arr[i], arr[minIdx]];
-            swaps.push([minIdx, i]);
+            temp.push([minIdx, i]);
         }
+        swaps.splice(idx, 0, temp);
     }
 
-    function bubbleSort(arr) {
+    function bubbleSort(arr, idx) {
         let swapped;
+        const temp = [];
         for (let i = 0; i < arr.length; i++) {
             swapped = false
             for (let j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
                     //Swap Elements
                     [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
-                    swaps.push([j, j + 1]);
+                    temp.push([j, j + 1]);
                     swapped = true;
                 }
             }
@@ -31,20 +34,23 @@ const Sort = function () {
                 break;
             }
         }
+        swaps.splice(idx, 0, temp);
     }
 
-    function insertionSort(arr) {
+    function insertionSort(arr, idx) {
+        const temp = [];
         for (let i = 1; i < arr.length; i++) {
             for (let j = i; j >= 0; j--) {
                 if (arr[j] < arr[j - 1]) {
                     [arr[j], arr[j - 1]] = [arr[j - 1], arr[j]];
-                    swaps.push([j, j - 1]);
+                    temp.push([j, j - 1]);
                 }
             }
         }
+        swaps.splice(idx, 0, temp);
     }
 
-    function partition(arr, lower, upper) {
+    function partition(arr, lower, upper, temp) {
         let pivot = arr[lower];
         let start = lower;
         let end = upper;
@@ -59,22 +65,36 @@ const Sort = function () {
             if (start < end) {
                 //Swap
                 [arr[start], arr[end]] = [arr[end], arr[start]];
-                swaps.push([start, end]);
+                temp.push([start, end]);
             }
         }
         [arr[lower], arr[end]] = [arr[end], arr[lower]];
-        swaps.push([lower, end]);
+        temp.push([lower, end]);
         return end;
     }
 
-    function quickSort(arr, low = 0, high = arr.length - 1) {
-        if (low < high) {
-            let pi = partition(arr, low, high);
+    function quickSort(arr, idx) {
+        const temp = [];
+        function _quickSort(arr, idx, temp, low = 0, high = arr.length - 1) {
+            if (low < high) {
+                let pi = partition(arr, low, high, temp);
 
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
+                _quickSort(arr, idx, temp, low, pi - 1);
+                _quickSort(arr, idx, temp, pi + 1, high);
+            }
         }
+        _quickSort(arr, idx, temp);
+        swaps.splice(idx, 0, temp);
     }
+
+    // function quickSort(arr, idx, low = 0, high = arr.length - 1) {
+    //     if (low < high) {
+    //         let pi = partition(arr, low, high);
+
+    //         quickSort(arr, idx, low, pi - 1);
+    //         quickSort(arr, idx, pi + 1, high);
+    //     }
+    // }
 
     function mergeSort(arr, l = 0, r = arr.length - 1) {
         // Recursively divide the array until one element remains.
